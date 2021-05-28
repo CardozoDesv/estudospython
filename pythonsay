@@ -1,0 +1,8 @@
+from time import sleep
+
+
+def pythonsay(var=''):
+    sleep(1)
+    for c in range(0, len(var2)):
+        print(f'{var[c]}', end='')
+        sleep(0.225)
