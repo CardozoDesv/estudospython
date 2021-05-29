@@ -5,11 +5,12 @@ def choice(str1, str2):
     two = str2.strip().upper()
     chr = 0
     while True:
-        ch = str(input(f'{one} ou {two} ?')).strip().upper()
-        if ch == str1:
+        ch = str(input(f'{one} ou {two} ?')).strip().upper()[0]
+        if ch == str1[0]:
             chr = 1
             break
-        elif ch == str2:
+        elif ch == str2[0]:
             chr = 2
             break
+        print('\033[1;31mOPÇÃO INvÀLIDA!\033[m')
     return chr
