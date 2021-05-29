@@ -1,0 +1,15 @@
+# Função para escolha entre duas opções
+
+def choice(str1, str2):
+    one = str1.strip().upper()
+    two = str2.strip().upper()
+    chr = 0
+    while True:
+        ch = str(input(f'{one} ou {two} ?')).strip().upper()
+        if ch == str1:
+            chr = 1
+            break
+        elif ch == str2:
+            chr = 2
+            break
+    return chr
