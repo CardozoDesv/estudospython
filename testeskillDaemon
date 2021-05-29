@@ -1,0 +1,14 @@
+from random import randint
+
+
+def testskill(skill):
+    dado = randint(0, 99)
+    if (skill / 4) < dado < skill:
+        print(f'\033[1;33m[{dado}]\033[m Teste bem sucedido!')
+    elif 0 != dado < (skill / 4):
+        print(f'\033[1;33m[{dado}] \033[1;31m ACERTO CRÍTICO!!!\033[m')
+    elif dado == 0:
+        print('\033[1;30mERRO CRÍTICO!..\033[m')
+    else:
+        print(f'\033[1;33m[{dado}] \033[1;37mFalhou...\033[m')
+
