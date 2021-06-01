@@ -1,0 +1,144 @@
+from datetime import date
+sexo = []
+idades = []
+vendedores = []
+vendas = []
+comissoes = []
+maior = menor = 0
+opts = ('1', '2', '3', '4', '5')
+while True:
+    print('\n{:^40}\n{:^40}\n{:^40}'.format('=¬' * 20, 'LOJAS CARDOZO', '=¬' * 20))
+    print('{:<40}\n{:<40}\n{:<40}\n{:<40}\n{:<40}'.format('[ 1 ] VENDEDORES', '[ 2 ] VENDAS',
+                                                          '[ 3 ] RELATORIOS', '[ 4 ] SAIR', '=¬' * 20))
+    while True:
+        opt = str(input('{:>38}'.format('Opção: '))).strip()
+        if opt in opts[:4]:
+            break
+    if opt == '1':
+        print('{:^40}\n{:^40}\n{:^40}\n{:<40}\n{:<40}\n{:<40}\n{:^40}'.format('=¬'*20, 'VENDEDORES', '=¬'*20,
+                                                                              '[ 1 ] REGISTRAR NOVOS',
+                                                                              '[ 2 ] VIZUALIZAR REGISTROS',
+                                                                              '[ 3 ] VOLTAR', '=¬'*20))
+        while True:
+            opt = str(input('{:>38}'.format('Opção: '))).strip()
+            if opt in opts[:3]:
+                break
+        if opt == '1':
+            print('{}\n{:^40}\n{}'.format('=¬'*20, 'REGISTRAR', '=¬'*20))
+            count = 0
+            while True:
+                nvendor = str(input('Nome: ')).strip().upper()
+                if nvendor not in vendedores:
+                    break
+                print('\n\033[1;31m{}\n{:^40}\n{}\033[m\n'.format('=¬' * 20, 'NOME DE REGISTRO EXISTENTE', '=¬' * 20))
+            while True:
+                idvendor = str(input('Idade: ')).strip()
+                if idvendor.isnumeric():
+                    break
+            while True:
+                sxvendor = str(input('Sexo [M/F]: ')).strip().upper()
+                if sxvendor in ['M', 'F']:
+                    break
+            vendedores += [nvendor]
+            idades += [idvendor]
+            sexo += [sxvendor]
+            vendas += [0]
+            comissoes += [0]
+        elif opt == '2':
+            print('{:^40}\n{:^40}\n{:^40}\n'.format('=¬'*20, 'VENDEDORES REGISTRADOS', '=¬'*20))
+            for v in range(0, len(vendedores)):
+                print(f'{vendedores[v]:<10} - {idades[v]} anos - ', 'Homem' if sexo[v] == 'M' else 'Mulher')
+
+    elif opt == '2':
+        print('{:^40}\n{:^40}\n{:^40}\n{:<40}\n{:<40}\n{:^40}'.format('=¬'*20, 'VENDAS', '=¬'*20,
+                                                                      '[ 1 ] REGISTRAR NOVA VENDA',
+                                                                      '[ 2 ] VOLTAR', '=¬'*20))
+        while True:
+            opt = str(input('{:>38}'.format('Opção: '))).strip()
+            if opt in opts[:2]:
+                break
+        if opt == '1':
+            while True:
+                print('=¬'*20)
+                vvendor = str(input('Vendedor: ')).strip().upper()
+                if vvendor not in vendedores:
+                    print('\n\033[1;31m{}\n{:^40}\n{}\033[m\n'.format('=¬'*20, 'VENDEDOR(A) NÃO CADASTRADO!', '=¬'*20))
+                elif vvendor in vendedores:
+                    break
+            vvenda = float(input('Valor: R$'))
+            vendas[vendedores.index(vvendor)] += vvenda
+            comissoes[vendedores.index(vvendor)] += vvenda * 0.05
+            print('\n\033[1;32m{}\n{:^40}\n{}\033[m\n'.format('.*'*20, 'REGISTRADA COM SUCESSO', '.*'*20))
+            while True:
+                cpr = str(input('Emitir comprovante de venda? [S/N] ')).strip().upper()
+                if cpr[0] in ['S', 'N']:
+                    break
+            if cpr == 'S':
+                print('\033[1;33m{}\n{:^40}\n{}\n{:>40}\n{:>40}\n{:>40}\n{}\n{}\n\033[m'.format('--'*20, 'LOJAS CARDOZO'
+                                                                                                , '--'*20,
+                                                                                                f'{date.today().day}/'
+                                                                                                f'{date.today().month}/'
+                                                                                                f'{date.today().year}',
+                                                                                                f'Vendedor: {vvendor}',
+                                                                                                'Cliente: Consumidor',
+                                                                                                f'Valor: R${vvenda:.2f}'
+                                                                                                ,'--'*20))
+    elif opt == '3':
+        print('{}\n{:^40}\n{}\n{:<40}\n{:<40}\n{:<40}\n{:<40}\n{:<40}\n{}'.format('=¬'*20, 'RELATORIOS', '=¬'*20,
+                                                                                  '[ 1 ] COMISSOES',
+                                                                                  '[ 2 ] TOTAL DE VENDAS',
+                                                                                  '[ 3 ] MAIOR COMISSAO',
+                                                                                  '[ 4 ] MENOR COMISSAO',
+                                                                                  '[ 5 ] VOLTAR', '=¬'*20))
+        while True:
+            opt = str(input('{:>38}'.format('Opção: '))).strip()
+            if opt in opts:
+                break
+        if opt == '1':
+            print(f'{"=¬"*20}\n{"COMISSOES":^40}\n{"=¬"*20}')
+            for c in range(0, len(vendedores)):
+                print(f'{vendedores[c]:<10} - R${comissoes[c]:.2f}')
+        elif opt == '2':
+            total = 0
+            print(f'{"=¬" * 20}\n{"TOTAL DE VENDAS":^40}\n{"=¬" * 20}')
+            for c in range(0, len(vendas)):
+                total += vendas[c]
+                print(f'{vendedores[c]:<10} vendeu um total de R${vendas[c]:.2f}')
+            print('\033[1;32m=¬'*20)
+            print(f'A equipe composta de {len(vendedores)} vendedor{"es" if len(vendedores) > 1 else ""}'
+                  f'\nSoma um total de R${total:.2f}.')
+            print('=¬'*20, '\033[m')
+
+        elif opt == '3':
+            nome = ' '
+            Mvenda = 0
+            for c in range(0, len(comissoes)):
+                if c == 0:
+                    maior = comissoes[c]
+                    Mvenda = vendas[c]
+                    nome = vendedores[c]
+                elif maior < comissoes[c]:
+                    maior = comissoes[c]
+                    nome = vendedores[c]
+                    Mvenda = vendas[c]
+            print(f'{"=¬"*20}\n{"MAIOR VENDA":^40}\n{"=¬"*20}')
+            print(f'A maior venda foi de R${Mvenda:.2f}\nA comissão é de '
+                  f'\033[1;32mR${maior:.2f}\033[m\nE será paga ao vendedor \033[1;32m{nome}\033[m.')
+        elif opt == '4':
+            nome = ''
+            mvenda = 0
+            for c in range(0, len(comissoes)):
+                if c == 0:
+                    menor = comissoes[c]
+                    mvenda = vendas[c]
+                    nome = vendedores[c]
+                elif menor > comissoes[c]:
+                    menor = comissoes[c]
+                    nome = vendedores[c]
+                    mvenda = vendas[c]
+            print(f'{"=¬" * 20}\n{"MENOR VENDA":^40}\n{"=¬" * 20}')
+            print(f'A menor venda foi de R${mvenda:.2f}\ne acomissão é de '
+                  f'\033[1;31mR${menor:.2f}\033[m\nE sera paga ao vendedor \033[1;31m{nome}\033[m.')
+    elif opt == '4':
+        break
+print('Sistema encerrado!')
